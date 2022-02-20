@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whatisthisbehaviour</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+<body>
+
+    
+    <div class="container mt-3">
+
+
+        <div class="mb-3">
+            <label for="username" class="form-label h3 mb-4">Enter the user whose behaviour is questionable</label>
+            <div class="input-group">
+                <span class="input-group-text">@</span>
+                <textarea class="form-control" id="username" rows="1"></textarea>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-outline-primary mt-3">Submit</button>
+              </div>
+            
+        </div>
+         
+    </div>
+
+
+
+    <script>
+        const body = document.querySelector('body')
+        const button =  document.querySelector('button')
+        button.onclick= function (){
+            // let username =''
+            let username =  document.querySelector('#username').value
+            // username+=addtoUsername
+            console.log(username)
+
+            fetch('/twitter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    username
+                })
+            })
+            .then((res)=>{
+                console.log(res)
+                res.json()
+            })
+            .then(()=>{
+            alert('Sucessfully sent the tweet')
+            body.innerHTML=null;
+            const newDiv =document.createElement('div')
+            newDiv.style.backgroundColor='teal'
+            newDiv.style.height='100vh'
+            newDiv.style.display='flex'
+            newDiv.style.justifyContent='center'
+            newDiv.style.alignItems='center'
+
+            const heading = document.createElement('h1')
+            heading.style.fontSize='5rem'
+            heading.textContent='We have notified them about their behaviour and hope they do better in future'
+            newDiv.appendChild(heading)
+            body.appendChild(newDiv)
+            })
+            .catch((err)=>{
+                alert('Error occured :(')
+                console.log(err)
+            })
+
+            
+        }
+
+    </script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>
