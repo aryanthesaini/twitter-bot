@@ -47,7 +47,7 @@ app.post('/twitter', (req, res) => {
     if (error) {
       console.log(error);
       res.status(500).json({
-        message: 'We could not do this',
+        message: `we could not do this because ${error}`,
       });
       return;
     }
